@@ -13,6 +13,26 @@ const Ensiklopedia = sequelize.define('Ensiklopedia', {
   },
   description: {
     type: DataTypes.TEXT
+  },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  location: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  audio: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  photo: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, {
   tableName: 'ensiklopedia',
