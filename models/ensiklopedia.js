@@ -16,9 +16,9 @@ const Ensiklopedia = sequelize.define('Ensiklopedia', {
   }
 }, {
   tableName: 'ensiklopedia',
-  timestamps: true, // tetap aktif
-  createdAt: 'created_at',   // ⬅️ Sesuaikan nama kolom
-  updatedAt: 'updated_at'    // ⬅️ Sesuaikan nama kolom
+  timestamps: true, 
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
 module.exports = Ensiklopedia;

@@ -5,7 +5,7 @@ class EnsiklopediaController {
   async getAll(req, res) {
     try {
       const ensiklopedias = await ensiklopediaRepository.findAll();
-      ApiResponse.success(res, ensiklopedias);
+      ApiResponse.success(res, ensiklopedias, 'Data Ensiklopedia berhasil diambil');
     } catch (err) {
       ApiResponse.error(res, err.message);
     }
@@ -15,7 +15,7 @@ class EnsiklopediaController {
     try {
       const ensiklopedia = await ensiklopediaRepository.findById(req.params.id);
       if (!ensiklopedia) return ApiResponse.notFound(res, 'Data tidak ditemukan');
-      ApiResponse.success(res, ensiklopedia);
+      ApiResponse.success(res, ensiklopedia, 'Data Ensiklopedia per id berhasil diambil');
     } catch (err) {
       ApiResponse.error(res, err.message);
     }
