@@ -11,22 +11,17 @@ app.use(cors({
   credentials: false 
 }));
 
-// Conditional JSON parser: SKIP untuk route ensiklopedia
-app.use((req, res, next) => {
-  // Skip JSON parser untuk route ensiklopedia (karena pakai multer)
-  if (req.path.startsWith('/api/ensiklopedia') && 
-      (req.method === 'POST' || req.method === 'PUT')) {
-    return next();
-  }
-  // Pakai JSON parser untuk route lain
-  express.json()(req, res, next);
-});
+// ❌ HAPUS BARIS INI
+// app.use(express.json());
 
-// Sajikan file statis
+// Sajikan file statis dari folder 'uploads'
 app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/api/auth', authRoutes);
+// Route dengan multer (TANPA express.json)
 app.use('/api/ensiklopedia', ensiklopediaRoutes);
+
+// Route auth dengan express.json khusus
+app.use('/api/auth', express.json(), authRoutes);
 
 app.get('/', (req, res) => {
   res.json({ msg: 'Server jalan' });
