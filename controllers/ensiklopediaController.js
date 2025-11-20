@@ -21,6 +21,17 @@ class EnsiklopediaController {
     }
   }
 
+  async search(req, res) {
+    try {
+      const { name } = req.query;
+      if (!name) return ApiResponse.badRequest(res, 'Nama harus diisi');
+      const ensiklopedias = await ensiklopediaRepository.search(name);
+      ApiResponse.success(res, ensiklopedias, 'Data Ensiklopedia berhasil dicari');
+    } catch (err) {
+      ApiResponse.error(res, err.message);
+    }
+  }
+
 async create(req, res) {
   try {
     console.log('=== CREATE ENSIKLOPEDIA DEBUG ===');
