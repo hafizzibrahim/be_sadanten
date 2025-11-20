@@ -7,8 +7,8 @@ const ensiklopediaRoutes = require('./routes/ensiklopediaRoutes');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Ganti dengan URL FE kamu
-  credentials: false // Jika pakai cookie/token
+  origin: '*', // Menerima semua origin untuk pengujian
+  credentials: false 
 }));
 
 app.use(express.json());
