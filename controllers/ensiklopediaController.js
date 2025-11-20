@@ -21,26 +21,51 @@ class EnsiklopediaController {
     }
   }
 
-  async create(req, res) {
-    try {
-      const { name, description, category, location, status } = req.body;
-      const newData = { name, description, category, location, status };
+async create(req, res) {
+  try {
+    console.log('=== CREATE ENSIKLOPEDIA DEBUG ===');
+    console.log('req.body:', req.body);
+    console.log('req.files:', req.files);
+    console.log('req.files type:', typeof req.files);
+    console.log('req.files keys:', req.files ? Object.keys(req.files) : 'NO FILES');
 
-      if (req.files) {
-        if (req.files.photo) {
-          newData.photo = `/uploads/photos/${req.files.photo[0].filename}`;
-        }
-        if (req.files.audio) {
-          newData.audio = `/uploads/audios/${req.files.audio[0].filename}`;
-        }
+    const { name, description, category, location, status } = req.body;
+    const newData = { name, description, category, location, status };
+
+    if (req.files) {
+      console.log('✅ req.files exists');
+      
+      if (req.files.photo) {
+        console.log('✅ Photo file found:', req.files.photo[0]);
+        newData.photo = `/uploads/photos/${req.files.photo[0].filename}`;
+        console.log('Photo path:', newData.photo);
+      } else {
+        console.log('❌ No photo in req.files');
       }
       
-      const ensiklopedia = await ensiklopediaRepository.create(newData);
-      ApiResponse.success(res, ensiklopedia, 'Data berhasil dibuat', 201);
-    } catch (err) {
-      ApiResponse.error(res, err.message);
+      if (req.files.audio) {
+        console.log('✅ Audio file found:', req.files.audio[0]);
+        newData.audio = `/uploads/audios/${req.files.audio[0].filename}`;
+        console.log('Audio path:', newData.audio);
+      } else {
+        console.log('❌ No audio in req.files');
+      }
+    } else {
+      console.log('❌ req.files is null/undefined');
     }
+
+    console.log('newData before create:', newData);
+    
+    const ensiklopedia = await ensiklopediaRepository.create(newData);
+    
+    console.log('Created data:', ensiklopedia.toJSON());
+    
+    ApiResponse.success(res, ensiklopedia, 'Data berhasil dibuat', 201);
+  } catch (err) {
+    console.error('❌ Create error:', err);
+    ApiResponse.error(res, err.message);
   }
+}
 
   async update(req, res) {
     try {
